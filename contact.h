@@ -1,41 +1,32 @@
 #pragma once
+#include <QString>
+#include <QDate>
 
-#include <vector>
-#include <string>
-#include <sstream>
+class Contact {
+public:
+    QString firstName;
+    QString lastName;
+    QString middleName;
+    QString address;
+    QDate birthDate;
+    QString email;
+    QString phoneWork;
+    QString phoneHome;
+    QString phoneMobile;
 
-class Contact{
-    private:
-        std::string name;
-        std::string surname;
-        std::string middlename;
-        std::string address;
-        std::string dateofbirth;
-        std::string email;
-        std::vector<std::string> phonenumber;
-    
-    public:
-        Contact();
-        Contact(const std::string& first, const std::string& last, const std::string& middle, const std::string& adr, const std::string& mail, const std::vector<std::string>& phones, const std::string& birthdate);
+    Contact() = default;
 
-        std::string getfirstname() const;
-        std::string getsurname() const;
-        std::string getmiddlename() const;
-        std::string getaddress() const;
-        std::string getdateofbirth() const;
-        std::string getemail() const;
-        std::vector<std::string> getphonenumber() const;
+    // Конструктор для создания контакта
+    Contact(const QString &fn, const QString &ln, const QString &mn,
+            const QString &addr, const QDate &bd, const QString &em,
+            const QString &pw, const QString &ph, const QString &pm)
+        : firstName(fn), lastName(ln), middleName(mn),
+        address(addr), birthDate(bd), email(em),
+        phoneWork(pw), phoneHome(ph), phoneMobile(pm) {}
 
-        void setfirstname(const std::string& s);
-        void setsurname(const std::string& s);
-        void setmiddlename(const std::string& s);
-        void setaddress(const std::string& s);
-        void setdateofbirth(const std::string& s);
-        void setemail(const std::string& s);
-        void setphonenumber(const std::vector<std::string>& p);
-        
-        std::string tostring() const;
-        static Contact fromstring(const std::string& line);
+    // Метод для получения строки для записи в файл
+    QString toFileString() const;
 
-        friend std::ostream& operator<<(std::ostream& os, const Contact& c);
+    // Метод для восстановления контакта из строки файла
+    static Contact fromFileString(const QString &line);
 };
